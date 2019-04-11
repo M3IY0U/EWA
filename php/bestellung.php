@@ -75,7 +75,6 @@
                 <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b" tabindex="6">
                 <input type="submit" value="Bestellen" tabindex="7">
           </form>
-
         </div>
       </div>
 

@@ -30,7 +30,22 @@
 
       <div id="main">
         <div class="content">
-
+          <div class="todo">
+            <form action="https://echo.fbi.h-da.de/">
+              <div class="text">Großer Döner</div>
+              <div class="radio">
+                <fieldset>
+                  <input type="radio" id="b" name="Status" value="bestellt">
+                  <label for="b"> Bestellt</label>
+                  <input type="radio" id="io" name="Status" value="im ofen">
+                  <label for="io"> Im Ofen</label>
+                  <input checked type="radio" id="f" name="Status" value="fertig">
+                  <label for="f"> Fertig</label>
+                </fieldset>
+                <input class="submit" type="submit" value="Bestellen" tabindex="7">
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
