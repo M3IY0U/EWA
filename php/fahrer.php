@@ -32,7 +32,8 @@
         <div class="content">
           <div class="todo">
             <form action="https://echo.fbi.h-da.de/">
-              <div class="text">Großer Döner</div>
+              <div class="contents">Großer Döner</div>
+              <div class="price">14,30€</div>
               <div class="radio">
                 <fieldset>
                   <input type="radio" id="f" name="Status" value="fertig">

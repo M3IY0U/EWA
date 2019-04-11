@@ -68,6 +68,7 @@
                   <option value="vdoener" selected>Veget. Döner</option>
                 </select>
               </label>
+              <div class="total">14,30€</div>
                 <input type="submit" value="Auswahl Löschen" tabindex="2">
                 <input type="submit" value="Alle Löschen" tabindex="3">
                 <input type="text" name="Name" value="" placeholder="Name" tabindex="4">
