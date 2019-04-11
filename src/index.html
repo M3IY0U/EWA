@@ -21,13 +21,13 @@
         <img src="res/banner.svg" alt="banner" id="logo">
         <div class="header-right">
             <a class="active" href="#bestellung">Bestellung</a>
-            <a href="#kunde">Kunde</a>
-            <a href="#Bäcker">Bäcker</a>
+            <a href="/HTML/status.html">Kunde</a>
+            <a href="#Baecker">Bäcker</a>
             <a href="#Fahrer">Fahrer</a>
         </div>
       </div>
 
-      
+
       <div id="main">
         <div class="content">
           <div class="headerimage">
@@ -61,35 +61,36 @@
         <div class="warenkorb">
           Ihr Warenkorb
           <form action="https://echo.fbi.h-da.de/">
-              <label></label>
-                <select name="top5 krasse endungen in anim" size="6">
-                  <option>Großer Döner</option>
-                  <option>Döner Pizza</option>
-                  <option>Veget. Döner</option>
+              <label>
+                <select name="Bestellung[]" size="6" tabindex="1" multiple>
+                  <option value="gdoener">Großer Döner</option>
+                  <option value="pizza">Döner Pizza</option>
+                  <option value="vdoener" selected>Veget. Döner</option>
                 </select>
-                <input type="submit" value="Auswahl Löschen">
-                <input type="submit" value="Alle Löschen">
-                <input type="text" name="Name" value="" placeholder="Name" pattern="((([A-Z])\w+)([ ]*))+">
-                <input type="text" name="Adresse" value="" placeholder="Adresse">
-                <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b">  
-                <input type="submit" value="Bestellen">    
+              </label>
+                <input type="submit" value="Auswahl Löschen" tabindex="2">
+                <input type="submit" value="Alle Löschen" tabindex="3">
+                <input type="text" name="Name" value="" placeholder="Name" tabindex="4">
+                <input type="text" name="Adresse" value="" placeholder="Adresse" tabindex="5">
+                <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b" tabindex="6">
+                <input type="submit" value="Bestellen" tabindex="7">
           </form>
-            
+
         </div>
       </div>
-      
+
       <div id="footer">
           <ul>
-              <li><a href="test.html">Bestellung</a></li>
-              <li><a href="test.html">Kunde</a></li>
-              <li><a href="test.html">Bäcker</a></li>
-              <li><a href="test.html">Fahrer</a></li>
+              <li><a href="#bestellung">Bestellung</a></li>
+              <li><a href="/HTML/status.html">Kunde</a></li>
+              <li><a href="#Baecker">Bäcker</a></li>
+              <li><a href="#Fahrer">Fahrer</a></li>
             </ul>
       </div>
-      
-      <div class="cookiebar open">
+
+      <!-- <div class="cookiebar open">
         <div class="left">Zur optimalen Nutzererfahrung nutzen wir auf unserer Website Cookies. 🍪 <a href="datenschutz.html">Mehr Informationen</a></div>
         <div class="right"><button class="cookiebar-close" onclick="cookieClose()">Verstanden!</button></div>
-      </div>
+      </div> -->
   </body>
 </html>
