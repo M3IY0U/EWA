@@ -6,9 +6,9 @@ Class Offer{
     public $price;
 
     public function __construct($n,$pa,$pr){
-      $name = $n;
-      $path = $pa;
-      $price = $pr;
+      $this->name = $n;
+      $this->path = $pa;
+      $this->price = $pr;
     }
 }
 

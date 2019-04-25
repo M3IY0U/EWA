@@ -125,8 +125,9 @@ timoschw;
             $oname = htmlspecialchars($item->name);
             $opath = htmlspecialchars($item->path);
             $oprice = htmlspecialchars($item->price);
+            var_dump($oname);
 
-            echo <<<code
+echo <<<code
 
                         <div class="item">
                           <div class="text">$oname</div>
