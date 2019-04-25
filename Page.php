@@ -4,30 +4,30 @@
  * Demonstrates use of PHP including class and OO.
  * Implements Zend coding standards.
  * Generate documentation with Doxygen or phpdoc
- * 
+ *
  * PHP Version 5
  *
  * @category File
  * @package  Pizzaservice
- * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de> 
- * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
- * @license  http://www.h-da.de  none 
- * @Release  1.2 
- * @link     http://www.fbi.h-da.de 
+ * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de>
+ * @author   Ralf Hahn, <ralf.hahn@h-da.de>
+ * @license  http://www.h-da.de  none
+ * @Release  1.2
+ * @link     http://www.fbi.h-da.de
  */
- 
+
 /**
- * This abstract class is a common base class for all 
- * HTML-pages to be created. 
- * It manages access to the database and provides operations 
+ * This abstract class is a common base class for all
+ * HTML-pages to be created.
+ * It manages access to the database and provides operations
  * for outputting header and footer of a page.
  * Specific pages have to inherit from that class.
  * Each inherited class can use these operations for accessing the db
  * and for creating the generic parts of a HTML-page.
  *
- * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de> 
- * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
- */ 
+ * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de>
+ * @author   Ralf Hahn, <ralf.hahn@h-da.de>
+ */
 abstract class Page
 {
     // --- ATTRIBUTES ---
@@ -37,31 +37,30 @@ abstract class Page
      * accessed by all operations of the class.
      */
     protected $_database = null;
-    
+
     // --- OPERATIONS ---
-    
+
     /**
-     * Connects to DB and stores 
-     * the connection in member $_database.  
+     * Connects to DB and stores
+     * the connection in member $_database.
      * Needs name of DB, user, password.
      *
      * @return none
      */
-    protected function __construct() 
+    protected function __construct()
     {
-        $this->_database = /* to do: create instance of class MySQLi */;
+        $this->_database = new MySQLi("localhost", "root", "", "loppings");
     }
-    
     /**
      * Closes the DB connection and cleans up
      *
      * @return none
      */
-    protected function __destruct()    
+    protected function __destruct()
     {
-        // to do: close database
+        $this->_database->close();
     }
-    
+
     /**
      * Generates the header section of the page.
      * i.e. starting from the content type up to the body-tag.
@@ -72,12 +71,32 @@ abstract class Page
      *
      * @return none
      */
-    protected function generatePageHeader($headline = "") 
+    protected function generatePageHeader($headline = "")
     {
         $headline = htmlspecialchars($headline);
         header("Content-type: text/html; charset=UTF-8");
-        
-        // to do: output common beginning of HTML code 
+
+echo <<<code
+
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>$headline</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="js/functions.js"></script>
+    <link rel="shortcut icon" href="../res/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <!-- (unessescary) stuff
+      <base href="https://www.example.de/">
+      <meta name="robots" content="index,follow">
+    -->
+  </head>
+
+
+  <body>
+code;
+        // to do: output common beginning of HTML code
         // including the individual headline
     }
 
@@ -86,9 +105,13 @@ abstract class Page
      *
      * @return none
      */
-    protected function generatePageFooter() 
+    protected function generatePageFooter()
     {
-        // to do: output common end of HTML code
+        echo <<<footer
+        </body>
+      </html>
+
+footer;
     }
 
     /**
@@ -99,7 +122,7 @@ abstract class Page
      *
      * @return none
      */
-    protected function processReceivedData() 
+    protected function processReceivedData()
     {
         if (get_magic_quotes_gpc()) {
             throw new Exception
@@ -109,8 +132,8 @@ abstract class Page
 } // end of class
 
 // Zend standard does not like closing php-tag!
-// PHP doesn't require the closing tag (it is assumed when the file ends). 
-// Not specifying the closing ? >  helps to prevent accidents 
-// like additional whitespace which will cause session 
-// initialization to fail ("headers already sent"). 
+// PHP doesn't require the closing tag (it is assumed when the file ends).
+// Not specifying the closing ? >  helps to prevent accidents
+// like additional whitespace which will cause session
+// initialization to fail ("headers already sent").
 //? >
