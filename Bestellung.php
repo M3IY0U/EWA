@@ -18,6 +18,7 @@
 
 // to do: change name 'Bestellung' throughout this file
 require_once './Page.php';
+require_once './Offer.php';
 
 /**
  * This is a template for top level classes, which represent
@@ -71,6 +72,14 @@ class Bestellung extends Page
         $offeritems = $this->_database->query("SELECT * FROM offer");
         if (!$offeritems)
             throw new Exception("Query failed: ".$_database->error);
+        $result=[];
+        while($item = $offeritems->fetch_assoc()){
+          $name = $item["OfferName"];
+          $path = $item["OfferImgPath"];
+          $price = $item["OfferPrice"];
+          $result[] = new Offer($name, $path, $price);
+        }
+        return $result;
     }
 
     /**
@@ -84,7 +93,7 @@ class Bestellung extends Page
      */
     protected function generateView()
     {
-        $this->getViewData();
+        $items = $this->getViewData();
         $this->generatePageHeader('Bestellung');
         // to do: call generateView() for all
 echo <<<timoschw
@@ -112,15 +121,23 @@ echo <<<timoschw
               <div class="price">4€</div>
             </div>
 timoschw;
-echo <<<code
+        foreach ($items as $item){
+            $oname = htmlspecialchars($item->name);
+            $opath = htmlspecialchars($item->path);
+            $oprice = htmlspecialchars($item->price);
 
-            <div class="item">
-              <div class="text"></div>
-              <div class="thumb"></div>
-              <div class="price">4€</div>
-            </div>
+            echo <<<code
+
+                        <div class="item">
+                          <div class="text">$oname</div>
+                          <div class="thumb"></div>
+                          <div class="price">$oprice €</div>
+                        </div>
 
 code;
+
+        }
+
 echo <<<code
         </div>
       </div>
