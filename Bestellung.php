@@ -122,10 +122,10 @@ echo <<<timoschw
             </div>
 timoschw;
         foreach ($items as $item){
-            $oname = htmlspecialchars($item->name);
+            $oname = htmlspecialchars($item->name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $opath = htmlspecialchars($item->path);
             $oprice = htmlspecialchars($item->price);
-            var_dump($oname);
+
 
 echo <<<code
 
