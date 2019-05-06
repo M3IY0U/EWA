@@ -71,13 +71,14 @@ class Bestellung extends Page
     {
         $offeritems = $this->_database->query("SELECT * FROM offer");
         if (!$offeritems)
-            throw new Exception("Query failed: ".$_database->error);
+            throw new Exception("Query failed: $this->_database->error()");
         $result=[];
         while($item = $offeritems->fetch_assoc()){
-          $name = $item["OfferName"];
-          $path = $item["OfferImgPath"];
-          $price = $item["OfferPrice"];
-          $result[] = new Offer($name, $path, $price);
+          #$name = $item['OfferName'];
+          #$path = $item['OfferImgPath'];
+          #$price = $item['OfferPrice'];
+          array_push($result,new Offer($item['OfferName'],$item['OfferImgPath'],$item['OfferPrice']));
+          #$result[] = new Offer($name, $path, $price);
         }
         return $result;
     }
@@ -135,9 +136,6 @@ echo <<<code
                           <div class="price">$oprice €</div>
                         </div>
 
-code;
-
-        }
 
 echo <<<code
         </div>

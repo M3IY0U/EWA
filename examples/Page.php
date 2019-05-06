@@ -49,7 +49,7 @@ abstract class Page
      */
     protected function __construct() 
     {
-        $this->_database = /* to do: create instance of class MySQLi */;
+        $this->_database = new MySQLi("localhost", "root","");
     }
     
     /**

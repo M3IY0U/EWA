@@ -11,5 +11,4 @@ Class Offer{
       $this->price = $pr;
     }
 }
-
- ?>
+?>
