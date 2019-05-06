@@ -71,7 +71,7 @@ class Bestellung extends Page
     {
         $offeritems = $this->_database->query("SELECT * FROM offer");
         if (!$offeritems)
-            throw new Exception("Query failed: $this->_database->error()");
+            throw new Exception("Query failed:" .$_database->error());
         $result=[];
         while($item = $offeritems->fetch_assoc()){
           #$name = $item['OfferName'];
@@ -136,7 +136,8 @@ echo <<<code
                           <div class="price">$oprice €</div>
                         </div>
 
-
+code;
+        }
 echo <<<code
         </div>
       </div>
