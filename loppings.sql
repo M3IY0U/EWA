@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2019 at 10:16 PM
+-- Generation Time: May 08, 2019 at 08:35 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -39,6 +39,11 @@ CREATE TABLE `offer` (
 -- Dumping data for table `offer`
 --
 
+INSERT INTO `offer` (`OfferID`, `OfferName`, `OfferImgPath`, `OfferPrice`) VALUES
+(6, 'Großer Döner', '/yeet/', 4123.3),
+(7, 'Vegetarischer Döner', '/yoot/', 333.33),
+(8, 'Döner Pizza', '/yuut/', 1.2),
+(9, 'Kleiner Döner', '/yaat/', 66.6);
 
 -- --------------------------------------------------------
 
@@ -96,29 +101,24 @@ ALTER TABLE `orderitem`
 -- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `OfferID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `OfferID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `order`
---
-ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orderitem` (`fOrderID`);
-
---
 -- Constraints for table `orderitem`
 --
 ALTER TABLE `orderitem`
-  ADD CONSTRAINT `orderitem_ibfk_1` FOREIGN KEY (`fOfferID`) REFERENCES `offer` (`OfferID`);
+  ADD CONSTRAINT `orderitem_ibfk_1` FOREIGN KEY (`fOfferID`) REFERENCES `offer` (`OfferID`),
+  ADD CONSTRAINT `orderitem_ibfk_2` FOREIGN KEY (`fOrderID`) REFERENCES `order` (`OrderID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

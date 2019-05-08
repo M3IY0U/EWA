@@ -97,6 +97,7 @@ class Bestellung extends Page
         $items = $this->getViewData();
         $this->generatePageHeader('Bestellung');
         // to do: call generateView() for all
+
 echo <<<timoschw
 
       <div class="header">
@@ -116,14 +117,10 @@ echo <<<timoschw
             <!--banner - image mit text?-->
           </div>
             <h1>Unsere Speisekarte</h1>
-            <div class="item">
-              <div class="text">Großer Döner</div>
-              <div class="thumb"></div>
-              <div class="price">4€</div>
-            </div>
+
 timoschw;
         foreach ($items as $item){
-            $oname = htmlspecialchars($item->name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $oname = htmlspecialchars($item->name, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
             $opath = htmlspecialchars($item->path);
             $oprice = htmlspecialchars($item->price);
 
@@ -145,12 +142,12 @@ echo <<<code
       <div id="right">
         <div class="warenkorb">
           Ihr Warenkorb
-          <form action="https://echo.fbi.h-da.de/">
+          <form action="Bestellung.php" method="post">
               <label>
                 <select name="Bestellung[]" size="6" tabindex="1" multiple>
-                  <option value="gdoener">Großer Döner</option>
-                  <option value="pizza">Döner Pizza</option>
-                  <option value="vdoener" selected>Veget. Döner</option>
+                  <option value="Großer Döner">Großer Döner</option>
+                  <option value="Döner Pizza">Döner Pizza</option>
+                  <option value="Vegetarischer Döner" selected>Veget. Döner</option>
                 </select>
               </label>
               <div class="total">14,30€</div>
@@ -183,13 +180,53 @@ code;
      * data do it here.
      * If the page contains blocks, delegate processing of the
 	 * respective subsets of data to them.
-     *
      * @return none
      */
     protected function processReceivedData()
     {
+        /*var_dump($_POST['Bestellung']);
+        var_dump($_POST['Name']);
+        var_dump($_POST['Adresse']);
+        var_dump($_POST['PLZ']);
+
+        // to do: call processReceivedData() for all members*/
         parent::processReceivedData();
-        // to do: call processReceivedData() for all members
+
+/*
+____________
+< php schw lol >
+------------
+       \   ^__^
+        \  (oo)\_______
+           (__)\       )\/\
+               ||----w |
+               ||     ||
+*/
+
+
+        if (sizeof($_POST) > 0){
+          if(($_POST['Name']=="")||($_POST['PLZ']=="")||($_POST['Adresse']=="")||(sizeof($_POST['Bestellung'])<0)){
+            return;
+          }
+          try {
+              $sql = "INSERT INTO `order` (OrderID, Adress, OrderTime) VALUES (NULL, ? , CURRENT_TIMESTAMP)";
+              $stmt = $this->_database->prepare($sql);
+              $adr = htmlspecialchars($_POST['Name'] . " " . $_POST['Adresse'] . " " . $_POST['PLZ']);
+              $stmt->bind_param("s", $adr);
+              $stmt->execute();
+              $oid = $this->_database->insert_id;
+
+              foreach ($_POST['Bestellung'] as $item){
+                  $sql = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, ItemID, Status) (SELECT ?, OfferID, NULL, 'bestellt' FROM `offer` WHERE offer.OfferName = ?)");
+                  $stmt = $this->_database->prepare($sql);
+                  $stmt->bind_param("is", $oid, $item);
+                  $stmt->execute();
+              }
+              header('Location: Bestellung.php');
+          } catch (\Exception $e) {
+            throw $e;
+          }
+        }
     }
 
     /**
