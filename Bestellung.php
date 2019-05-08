@@ -147,7 +147,7 @@ echo <<<code
                 <select name="Bestellung[]" size="6" tabindex="1" multiple>
                   <option value="Großer Döner">Großer Döner</option>
                   <option value="Döner Pizza">Döner Pizza</option>
-                  <option value="Vegetarischer Döner" selected>Veget. Döner</option>
+                  <option value="Lamacun" selected>Lamacun</option>
                 </select>
               </label>
               <div class="total">14,30€</div>
@@ -192,17 +192,6 @@ code;
         // to do: call processReceivedData() for all members*/
         parent::processReceivedData();
 
-/*
-____________
-< php schw lol >
-------------
-       \   ^__^
-        \  (oo)\_______
-           (__)\       )\/\
-               ||----w |
-               ||     ||
-*/
-
 
         if (sizeof($_POST) > 0){
           if(($_POST['Name']=="")||($_POST['PLZ']=="")||($_POST['Adresse']=="")||(sizeof($_POST['Bestellung'])<0)){
@@ -210,17 +199,27 @@ ____________
           }
           try {
               $sql = "INSERT INTO `order` (OrderID, Adress, OrderTime) VALUES (NULL, ? , CURRENT_TIMESTAMP)";
-              $stmt = $this->_database->prepare($sql);
-              $adr = htmlspecialchars($_POST['Name'] . " " . $_POST['Adresse'] . " " . $_POST['PLZ']);
-              $stmt->bind_param("s", $adr);
-              $stmt->execute();
-              $oid = $this->_database->insert_id;
+              if($stmt = $this->_database->prepare($sql)){
+                $adr = htmlspecialchars($_POST['Name'] . " " . $_POST['Adresse'] . " " . $_POST['PLZ']);
+                $stmt->bind_param("s", $adr);
+                $stmt->execute();
+                $oid = $this->_database->insert_id;
+              }else{
+                echo "something broke.:/<br>";
+              }
 
+              $stmt->close();
               foreach ($_POST['Bestellung'] as $item){
-                  $sql = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, ItemID, Status) (SELECT ?, OfferID, NULL, 'bestellt' FROM `offer` WHERE offer.OfferName = ?)");
-                  $stmt = $this->_database->prepare($sql);
-                  $stmt->bind_param("is", $oid, $item);
-                  $stmt->execute();
+
+                  // $sql2 = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, Status) SELECT ?, OfferID, 'bestellt' FROM `offer` WHERE offer.OfferName = ?");
+                  // if($stmt2 = $this->_database->prepare($sql2)){
+                  //   $item = "'" . $item . "'";
+                  //   $stmt2->bind_param("is", $oid, $item);
+                  //   $stmt2->execute();
+                  // }
+                  // $stmt2->close();
+                  $sql = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, Status) SELECT $oid, OfferID, 'bestellt' FROM `offer` WHERE offer.OfferName = '$item'");
+                                $this->_database->query($sql);
               }
               header('Location: Bestellung.php');
           } catch (\Exception $e) {
