@@ -18,6 +18,7 @@
 
 // to do: change name 'Kunde' throughout this file
 require_once './Page.php';
+require_once './Order.php';
 
 /**
  * This is a template for top level classes, which represent
@@ -68,7 +69,14 @@ class Kunde extends Page
      */
     protected function getViewData()
     {
-        // to do: fetch data for this view from the database
+      $offeritems = $this->_database->query("SELECT Status, OfferName FROM `offer` o,`orderitem` i, `order` od WHERE i.fOfferID=o.OfferID AND i.fOrderID=od.OrderID; ");
+      if (!$offeritems)
+          throw new Exception("Query failed:" .$_database->error());
+      $result=[];
+       while($item = $offeritems->fetch_assoc()){
+        array_push($result,new Order($item['Status'],$item['OfferName']));
+      }
+      return $result;// to do: fetch data for this view from the database
     }
 
     /**
@@ -82,7 +90,7 @@ class Kunde extends Page
      */
     protected function generateView()
     {
-        $this->getViewData();
+        $items = $this->getViewData();
         $this->generatePageHeader('Kunde');
         // to do: call generateView() for all members
 echo <<<timostestserver
@@ -100,22 +108,25 @@ echo <<<timostestserver
 
       <div id="main">
         <div class="content">
+
+timostestserver;
+
+    foreach ($items as $item){
+        $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
+        $oname = htmlspecialchars($item->name);
+
+echo <<<code
+
           <div class="order">
-              <div class="Item">Großer Döner</div>
-              <div class="Status">Bestellt</div>
+              <div class="Item">$oname</div>
+              <div class="Status">$ostatus</div>
           </div>
-          <div class="order">
-              <div class="Item">Kleiner Döner</div>
-              <div class="Status">In Zubereitung</div>
-          </div>
-          <div class="order">
-              <div class="Item">Döner Pizza</div>
-              <div class="Status">Fertig</div>
-          </div>
-          <div class="order">
-              <div class="Item">Veget. Döner</div>
-              <div class="Status">In Zustellung</div>
-          </div>
+
+code;
+      }
+echo <<<code
+
+
         </div>
       </div>
 
@@ -128,7 +139,7 @@ echo <<<timostestserver
             </ul>
       </div>
 
-timostestserver;
+code;
         $this->generatePageFooter();
     }
 

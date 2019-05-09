@@ -146,7 +146,7 @@ echo <<<code
               <label>
                 <select name="Bestellung[]" size="6" tabindex="1" multiple>
                   <option value="Großer Döner">Großer Döner</option>
-                  <option value="Döner Pizza">Döner Pizza</option>
+                  <option value="Borgar">Borgar</option>
                   <option value="Lamacun" selected>Lamacun</option>
                 </select>
               </label>
@@ -194,7 +194,7 @@ code;
 
 
         if (sizeof($_POST) > 0){
-          if(($_POST['Name']=="")||($_POST['PLZ']=="")||($_POST['Adresse']=="")||(sizeof($_POST['Bestellung'])<0)){
+          if(!isset($_POST['Name'])||!isset($_POST['PLZ'])||!isset($_POST['Adresse'])||(sizeof($_POST['Bestellung'])<0)){
             return;
           }
           try {
@@ -209,6 +209,7 @@ code;
               }
 
               $stmt->close();
+              $sql = "";
               foreach ($_POST['Bestellung'] as $item){
 
                   // $sql2 = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, Status) SELECT ?, OfferID, 'bestellt' FROM `offer` WHERE offer.OfferName = ?");
@@ -218,9 +219,10 @@ code;
                   //   $stmt2->execute();
                   // }
                   // $stmt2->close();
-                  $sql = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, Status) SELECT $oid, OfferID, 'bestellt' FROM `offer` WHERE offer.OfferName = '$item'");
-                                $this->_database->query($sql);
+                  $sql .= htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID) SELECT $oid, OfferID FROM `offer` WHERE offer.OfferName = '$item'; ");
+
               }
+              $this->_database->multi_query($sql);
               header('Location: Bestellung.php');
           } catch (\Exception $e) {
             throw $e;

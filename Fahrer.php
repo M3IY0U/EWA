@@ -18,6 +18,7 @@
 
 // to do: change name 'Fahrer' throughout this file
 require_once './Page.php';
+require_once './Delivery.php';
 
 /**
  * This is a template for top level classes, which represent
@@ -68,7 +69,28 @@ class Fahrer extends Page
      */
     protected function getViewData()
     {
+
+
         // to do: fetch data for this view from the database
+        $orders = $this->_database->query("SELECT * FROM `order`");
+        if (!$orders)
+            throw new Exception("Query failed:" .$_database->error());
+        $result=[];
+        while($item = $orders->fetch_assoc()){
+          $prp = (string) $item['OrderID'];
+          $orderitems = $this->_database->query("SELECT OfferName FROM `orderitem`, `offer` WHERE fOrderID = $prp AND fOfferID = OfferID");
+          if (!$orderitems)
+              throw new Exception("Query failed:" .$_database->error());
+          $items=[];
+          while($x = $orderitems->fetch_assoc()){
+            array_push($items, $x['OfferName']);
+          }
+
+
+          array_push($result,new Delivery($item['Status'],$item['Adress'],$items));
+
+        }
+        return $result;
     }
 
     /**
@@ -82,10 +104,10 @@ class Fahrer extends Page
      */
     protected function generateView()
     {
-        $this->getViewData();
+        $items = $this->getViewData();
         $this->generatePageHeader('Fahrer');
         // to do: call generateView() for all members
-echo <<<hshsjs
+echo <<<code
 
 <div class="header">
   <img src="../res/banner.svg" alt="banner" id="logo">
@@ -97,26 +119,41 @@ echo <<<hshsjs
   </div>
 </div>
 
+code;
+
+foreach ($items as $item){
+    $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
+    $oadress = htmlspecialchars($item->adress);
+    $oitems = "";
+    foreach ($item->orders as $x){
+      $oitems .= $x ." ";
+    }
+    var_dump($item);
+}
+echo <<<code
+<div class="todo">
+  <form action="Fahrer.php" method="post">
+    <div class="contents">Großer Döner</div>
+    <div class="price">14,30€</div>
+    <div class="radio">
+      <fieldset>
+        <input type="radio" id="f" name="Status" value="fertig">
+        <label for="f"> Fertig</label>
+        <input type="radio" id="u" name="Status" value="unterwegs">
+        <label for="u"> Unterwegs</label>
+        <input checked type="radio" id="g" name="Status" value="geliefert">
+        <label for="g">Geliefert</label>
+      </fieldset>
+      <input class="submit" type="submit" value="Bestellen" tabindex="7">
+    </div>
+  </form>
+</div>
+code;
+echo <<<code
 
 <div id="main">
   <div class="content">
-    <div class="todo">
-      <form action="https://echo.fbi.h-da.de/">
-        <div class="contents">Großer Döner</div>
-        <div class="price">14,30€</div>
-        <div class="radio">
-          <fieldset>
-            <input type="radio" id="f" name="Status" value="fertig">
-            <label for="f"> Fertig</label>
-            <input type="radio" id="u" name="Status" value="unterwegs">
-            <label for="u"> Unterwegs</label>
-            <input checked type="radio" id="g" name="Status" value="geliefert">
-            <label for="g">Geliefert</label>
-          </fieldset>
-          <input class="submit" type="submit" value="Bestellen" tabindex="7">
-        </div>
-      </form>
-    </div>
+
   </div>
 </div>
 
@@ -129,7 +166,7 @@ echo <<<hshsjs
       </ul>
 </div>
 
-hshsjs;
+code;
         $this->generatePageFooter();
     }
 

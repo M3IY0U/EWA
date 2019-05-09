@@ -50,6 +50,8 @@ abstract class Page
     protected function __construct()
     {
         $this->_database = new MySQLi("localhost", "root", "", "loppings");
+        $this->_database->set_charset("utf8");
+
     }
     /**
      * Closes the DB connection and cleans up
