@@ -120,8 +120,9 @@ echo <<<code
 </div>
 
 code;
-
+$i = 0;
 foreach ($items as $item){
+    $i++;
     $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
     $oadress = htmlspecialchars($item->adress);
     $oitems = "";
@@ -152,18 +153,18 @@ echo <<<code
         <div class="price">$ototal €</div>
         <div class="radio">
           <fieldset>
-            <input $checked1 type="radio" id="f" name="Status" value="Fertig">
-            <label for="f"> Fertig</label>
-            <input $checked2 type="radio" id="u" name="Status" value="Unterwegs">
-            <label for="u"> Unterwegs</label>
-            <input type="radio" id="g" name="Status" value="Geliefert">
-            <label for="g">Geliefert</label>
+            <input $checked1 type="radio" id="f$i" name="Status" value="Fertig">
+            <label for="f$i"> Fertig</label>
+            <input $checked2 type="radio" id="u$i" name="Status" value="Unterwegs">
+            <label for="u$i"> Unterwegs</label>
+            <input type="radio" id="g$i" name="Status" value="Geliefert">
+            <label for="g$i">Geliefert</label>
           </fieldset>
           <input type="hidden" name="OID" value="$oid" />
           <input class="submit" type="submit" value="Bestellen" tabindex="7">
         </div>
       </form>
-    </div
+    </div>
 code;
 
 }

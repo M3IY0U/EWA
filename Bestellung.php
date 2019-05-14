@@ -95,6 +95,7 @@ class Bestellung extends Page
     protected function generateView()
     {
         $items = $this->getViewData();
+
         $this->generatePageHeader('Bestellung');
         // to do: call generateView() for all
 
@@ -197,20 +198,22 @@ code;
           if(!isset($_POST['Name'])||!isset($_POST['PLZ'])||!isset($_POST['Adresse'])||(sizeof($_POST['Bestellung'])<0)){
             return;
           }
+
           try {
               $sql = "INSERT INTO `order` (OrderID, Adress, OrderTime) VALUES (NULL, ? , CURRENT_TIMESTAMP)";
               if($stmt = $this->_database->prepare($sql)){
-                $adr = htmlspecialchars($_POST['Name'] . " " . $_POST['Adresse'] . " " . $_POST['PLZ']);
+                $adr = $this->_database->real_escape_string(htmlspecialchars($_POST['Name'] . " " . $_POST['Adresse'] . " " . $_POST['PLZ']));
                 $stmt->bind_param("s", $adr);
                 $stmt->execute();
                 $oid = $this->_database->insert_id;
+                $_SESSION['oid'] = $oid;
               }else{
                 echo "something broke.:/<br>";
               }
 
               $stmt->close();
               $sql = "";
-              foreach ($_POST['Bestellung'] as $item){
+              foreach (($_POST['Bestellung']) as $item){
 
                   // $sql2 = htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID, Status) SELECT ?, OfferID, 'bestellt' FROM `offer` WHERE offer.OfferName = ?");
                   // if($stmt2 = $this->_database->prepare($sql2)){
@@ -219,10 +222,12 @@ code;
                   //   $stmt2->execute();
                   // }
                   // $stmt2->close();
+                  $item = $this->_database->real_escape_string($item);
                   $sql .= htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID) SELECT $oid, OfferID FROM `offer` WHERE offer.OfferName = '$item'; ");
 
               }
               $this->_database->multi_query($sql);
+
               header('Location: Bestellung.php');
           } catch (\Exception $e) {
             throw $e;
@@ -245,6 +250,7 @@ code;
     public static function main()
     {
         try {
+            session_start();
             $page = new Bestellung();
             $page->processReceivedData();
             $page->generateView();

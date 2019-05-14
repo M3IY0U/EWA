@@ -1,6 +1,6 @@
 <?php	// UTF-8 marker äöüÄÖÜß€
 /**
- * Class Kunde for the exercises of the EWA lecture
+ * Class PageTemplate for the exercises of the EWA lecture
  * Demonstrates use of PHP including class and OO.
  * Implements Zend coding standards.
  * Generate documentation with Doxygen or phpdoc
@@ -16,10 +16,9 @@
  * @link     http://www.fbi.h-da.de
  */
 
-// to do: change name 'Kunde' throughout this file
+// to do: change name 'PageTemplate' throughout this file
 require_once './Page.php';
 require_once './Order.php';
-
 /**
  * This is a template for top level classes, which represent
  * a complete web page and which are called directly by the user.
@@ -28,10 +27,11 @@ require_once './Order.php';
  * to be replaced by the name of the specific HTML page e.g. baker.
  * The order of methods might correspond to the order of thinking
  * during implementation.
+
  * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de>
  * @author   Ralf Hahn, <ralf.hahn@h-da.de>
  */
-class Kunde extends Page
+class PageTemplate extends Page
 {
     // to do: declare reference variables for members
     // representing substructures/blocks
@@ -69,15 +69,16 @@ class Kunde extends Page
      */
     protected function getViewData($oid)
     {
-      $oid = $this->_database->real_escape_string($oid);
-      $offeritems = $this->_database->query("SELECT Status, OfferName FROM `offer` o,`orderitem` i, `order` od WHERE i.fOfferID=o.OfferID AND i.fOrderID=od.OrderID AND od.OrderID = $oid; ");
-      if (!$offeritems)
-          throw new Exception("Query failed:" .$_database->error());
-      $result=[];
-       while($item = $offeritems->fetch_assoc()){
-        array_push($result,new Order($item['Status'],$item['OfferName']));
-      }
-      return $result;// to do: fetch data for this view from the database
+        // to do: fetch data for this view from the database
+        $oid = $this->_database->real_escape_string($oid);
+        $offeritems = $this->_database->query("SELECT Status, OfferName FROM `offer` o,`orderitem` i, `order` od WHERE i.fOfferID=o.OfferID AND i.fOrderID=od.OrderID AND od.OrderID = $oid; ");
+        if (!$offeritems)
+            throw new Exception("Query failed:" .$_database->error());
+        $result=[];
+         while($item = $offeritems->fetch_assoc()){
+          array_push($result,new Order($item['Status'],$item['OfferName']));
+        }
+        return $result;// to do: fetch data for this view from the database
     }
 
     /**
@@ -91,96 +92,19 @@ class Kunde extends Page
      */
     protected function generateView()
     {
+        // $this->getViewData();
+        // $this->generatePageHeader('to do: change headline');
+        // // to do: call generateView() for all members
+        // // to do: output view of this page
+        // $this->generatePageFooter();
 
-        $this->generatePageHeader('Kunde');
         if(isset($_SESSION['oid'])){
             $items = $this->getViewData($_SESSION['oid']);
+            $serializedData = json_encode($items);
+            echo $serializedData;
         }else{
-          echo <<<code
-
-                <div class="header">
-                  <img src="../res/banner.svg" alt="banner" id="logo">
-                  <div class="header-right">
-                      <a href="bestellung.php">Bestellung</a>
-                      <a class="active" href="#kunde">Kunde</a>
-                      <a href="baecker.php">Bäcker</a>
-                      <a href="fahrer.php">Fahrer</a>
-                  </div>
-                </div>
-
-
-                <div id="main">
-                  <div class="content">
-                    <div class="error">
-                      <div class="img"><img src="./res/top10traurig.png" alt=":("></div>
-                      <div class="msg">Holla, nicht so voreilig, du hast leider noch nichts Bestellt. Wenn dein Magen knurrt, kannst du dir <a href="./Bestellung.php">Hier</a> unser Angebot ansehen!</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div id="footer">
-                    <ul>
-                        <li><a href="bestellung.php">Bestellung</a></li>
-                        <li><a href="#kunde">Kunde</a></li>
-                        <li><a href="baecker.php">Bäcker</a></li>
-                        <li><a href="fahrer.php">Fahrer</a></li>
-                      </ul>
-                </div>
-
-code;
-$this->generatePageFooter();
-          return;
+          echo("oof");
         }
-
-        // to do: call generateView() for all members
-echo <<<timostestserver
-
-      <div class="header">
-        <img src="../res/banner.svg" alt="banner" id="logo">
-        <div class="header-right">
-            <a href="bestellung.php">Bestellung</a>
-            <a class="active" href="#kunde">Kunde</a>
-            <a href="baecker.php">Bäcker</a>
-            <a href="fahrer.php">Fahrer</a>
-        </div>
-      </div>
-
-
-      <div id="main">
-        <div class="content">
-
-timostestserver;
-
-    foreach ($items as $item){
-        $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
-        $oname = htmlspecialchars($item->name);
-
-echo <<<code
-
-          <div class="order">
-              <div class="Item">$oname</div>
-              <div class="Status">$ostatus</div>
-          </div>
-
-code;
-      }
-echo <<<code
-
-
-        </div>
-      </div>
-
-      <div id="footer">
-          <ul>
-              <li><a href="bestellung.php">Bestellung</a></li>
-              <li><a href="#kunde">Kunde</a></li>
-              <li><a href="baecker.php">Bäcker</a></li>
-              <li><a href="fahrer.php">Fahrer</a></li>
-            </ul>
-      </div>
-
-code;
-        $this->generatePageFooter();
     }
 
     /**
@@ -214,12 +138,12 @@ code;
     {
         try {
             session_start();
-            $page = new Kunde();
+            $page = new PageTemplate();
             $page->processReceivedData();
             $page->generateView();
         }
         catch (Exception $e) {
-            header("Content-type: text/plain; charset=UTF-8");
+            header("Content-type: application/json; charset=UTF-8");
             echo $e->getMessage();
         }
     }
@@ -227,7 +151,7 @@ code;
 
 // This call is starting the creation of the page.
 // That is input is processed and output is created.
-Kunde::main();
+PageTemplate::main();
 
 // Zend standard does not like closing php-tag!
 // PHP doesn't require the closing tag (it is assumed when the file ends).
