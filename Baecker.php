@@ -18,6 +18,7 @@
 
 // to do: change name 'Baecker' throughout this file
 require_once './Page.php';
+require_once './Delivery.php';
 
 /**
  * This is a template for top level classes, which represent
@@ -69,6 +70,26 @@ class Baecker extends Page
     protected function getViewData()
     {
         // to do: fetch data for this view from the database
+
+        $orders = $this->_database->query("SELECT Adress, Status, OrderID, SUM(OfferPrice) AS Total FROM `order`, `offer`,`orderitem` WHERE fOrderID = OrderID AND fOfferID = OfferID GROUP BY OrderID");
+        if (!$orders)
+            throw new Exception("Query failed:" .$_database->error());
+        $result=[];
+        while($item = $orders->fetch_assoc()){
+          $prp = (string) $item['OrderID'];
+          $orderitems = $this->_database->query("SELECT OfferName FROM `orderitem`, `offer` WHERE fOrderID = $prp AND fOfferID = OfferID");
+          if (!$orderitems)
+              throw new Exception("Query failed:" .$_database->error());
+          $items=[];
+          while($x = $orderitems->fetch_assoc()){
+            array_push($items, $x['OfferName']);
+          }
+
+
+          array_push($result,new Delivery($item['Status'],$item['Adress'],$items, $item['Total'], $item['OrderID']));
+
+        }
+        return $result;
     }
 
     /**
@@ -82,10 +103,10 @@ class Baecker extends Page
      */
     protected function generateView()
     {
-        $this->getViewData();
+        $items = $this->getViewData();
         $this->generatePageHeader('Baecker');
         // to do: call generateView() for all members
-echo <<<lint
+echo <<<code
 
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo">
@@ -100,22 +121,59 @@ echo <<<lint
 
       <div id="main">
         <div class="content">
-          <div class="todo">
-            <form action="https://echo.fbi.h-da.de/">
-              <div class="text">Großer Döner</div>
-              <div class="radio">
-                <fieldset>
-                  <input type="radio" id="b" name="Status" value="bestellt">
-                  <label for="b"> Bestellt</label>
-                  <input type="radio" id="io" name="Status" value="im ofen">
-                  <label for="io"> Im Ofen</label>
-                  <input checked type="radio" id="f" name="Status" value="fertig">
-                  <label for="f"> Fertig</label>
-                </fieldset>
+
+code;
+$i = 0;
+foreach ($items as $item){
+    $i++;
+    $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
+    $oadress = htmlspecialchars($item->adress);
+    $oitems = "";
+    $oid = $item->id;
+    $checked1 = "";
+    $checked2 = "";
+    switch ($item->status) {
+      case 'Bestellt':
+        $checked1 = "checked";
+        break;
+      case 'Im Ofen':
+        $checked2 = "checked";
+        break;
+      default:
+        continue 2;
+    }
+    $ototal = htmlspecialchars($item->total);
+    foreach ($item->orders as $x){
+      $oitems .= $x ." ";
+    }
+    //var_dump($item);
+
+    echo <<<code
+    <div class="todo">
+      <form action="./Baecker.php" method="post">
+                  <div class="items">$oitems</div>
+                  <div class="ordernum">Order# : $oid</div>
+                  <div class="radio">
+                    <fieldset>
+                      <input $checked1 type="radio" id="b$i" name="Status" value="Bestellt">
+                      <label for="b$i"> Bestellt</label>
+                      <input $checked2 type="radio" id="io$i" name="Status" value="Im Ofen">
+                      <label for="io$i"> Im Ofen</label>
+                      <input type="radio" name="Status" id="f$i" value="Fertig">
+                      <label for="f$i"> Fertig</label>
+                      <input type="hidden" name="OID" value="$oid" />
+                    </fieldset>
+                  </div>
                 <input class="submit" type="submit" value="Bestellen" tabindex="7">
-              </div>
-            </form>
-          </div>
+              </form>
+            </div>
+code;
+
+}
+
+
+echo<<<code
+
         </div>
       </div>
 
@@ -128,7 +186,7 @@ echo <<<lint
             </ul>
       </div>
 
-lint;
+code;
         $this->generatePageFooter();
     }
 
@@ -145,6 +203,33 @@ lint;
     {
         parent::processReceivedData();
         // to do: call processReceivedData() for all members
+        if (sizeof($_POST) > 0){
+
+          if(!isset($_POST['Status']) || !isset($_POST['OID'])){
+            echo("Invalid Input");
+            return;
+          }
+          if($_POST['Status'] != "Bestellt" && $_POST['Status'] != "Im Ofen" && $_POST['Status'] != "Fertig" || !is_numeric($_POST['OID'])){
+            throw new Exception(var_dump($_POST));
+            return;
+            echo("Invalid Input");
+          }
+
+          try {
+
+              $sql = "UPDATE `order` SET Status = ? WHERE OrderID = ? ;";
+              if($stmt = $this->_database->prepare($sql)){
+                $stmt->bind_param("ss", $_POST['Status'], $_POST['OID']);
+                $stmt->execute();
+              }else{
+                echo "something broke.:/<br>";
+              }
+              $stmt->close();
+              header('Location: Baecker.php');
+          } catch (\Exception $e) {
+            throw $e;
+          }
+        }
     }
 
     /**

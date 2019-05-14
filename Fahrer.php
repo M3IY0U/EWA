@@ -72,7 +72,7 @@ class Fahrer extends Page
 
 
         // to do: fetch data for this view from the database
-        $orders = $this->_database->query("SELECT * FROM `order`");
+        $orders = $this->_database->query("SELECT Adress, Status, OrderID, SUM(OfferPrice) AS Total FROM `order`, `offer`,`orderitem` WHERE fOrderID = OrderID AND fOfferID = OfferID GROUP BY OrderID");
         if (!$orders)
             throw new Exception("Query failed:" .$_database->error());
         $result=[];
@@ -87,7 +87,7 @@ class Fahrer extends Page
           }
 
 
-          array_push($result,new Delivery($item['Status'],$item['Adress'],$items));
+          array_push($result,new Delivery($item['Status'],$item['Adress'],$items, $item['Total'], $item['OrderID']));
 
         }
         return $result;
@@ -125,30 +125,48 @@ foreach ($items as $item){
     $ostatus = htmlspecialchars($item->status, ENT_QUOTES | ENT_HTML5 | ENT_DISALLOWED | ENT_SUBSTITUTE, 'UTF-8');
     $oadress = htmlspecialchars($item->adress);
     $oitems = "";
+    $oid = $item->id;
+    $checked1 = "";
+    $checked2 = "";
+    switch ($item->status) {
+      case 'Fertig':
+        $checked1 = "checked";
+        break;
+      case 'Unterwegs':
+        $checked2 = "checked";
+        break;
+      default:
+        continue 2;
+    }
+    $ototal = htmlspecialchars($item->total);
     foreach ($item->orders as $x){
       $oitems .= $x ." ";
     }
-    var_dump($item);
-}
+    //var_dump($item);
+
 echo <<<code
-<div class="todo">
-  <form action="Fahrer.php" method="post">
-    <div class="contents">Großer Döner</div>
-    <div class="price">14,30€</div>
-    <div class="radio">
-      <fieldset>
-        <input type="radio" id="f" name="Status" value="fertig">
-        <label for="f"> Fertig</label>
-        <input type="radio" id="u" name="Status" value="unterwegs">
-        <label for="u"> Unterwegs</label>
-        <input checked type="radio" id="g" name="Status" value="geliefert">
-        <label for="g">Geliefert</label>
-      </fieldset>
-      <input class="submit" type="submit" value="Bestellen" tabindex="7">
-    </div>
-  </form>
-</div>
+    <div class="todo">
+      <form action="Fahrer.php" method="post">
+        <div class="adress">$oadress</div>
+        <div class="contents">$oitems</div>
+        <div class="price">$ototal €</div>
+        <div class="radio">
+          <fieldset>
+            <input $checked1 type="radio" id="f" name="Status" value="Fertig">
+            <label for="f"> Fertig</label>
+            <input $checked2 type="radio" id="u" name="Status" value="Unterwegs">
+            <label for="u"> Unterwegs</label>
+            <input type="radio" id="g" name="Status" value="Geliefert">
+            <label for="g">Geliefert</label>
+          </fieldset>
+          <input type="hidden" name="OID" value="$oid" />
+          <input class="submit" type="submit" value="Bestellen" tabindex="7">
+        </div>
+      </form>
+    </div
 code;
+
+}
 echo <<<code
 
 <div id="main">
@@ -183,6 +201,34 @@ code;
     {
         parent::processReceivedData();
         // to do: call processReceivedData() for all members
+        if (sizeof($_POST) > 0){
+
+          if(!isset($_POST['Status']) || !isset($_POST['OID'])){
+            echo("Invalid Input");
+            return;
+          }
+          if($_POST['Status'] != "Fertig" && $_POST['Status'] != "Unterwegs" && $_POST['Status'] != "Geliefert" || !is_numeric($_POST['OID'])){
+            throw new Exception(var_dump($_POST));
+            return;
+            echo("Invalid Input");
+          }
+
+          try {
+
+              $sql = "UPDATE `order` SET Status = ? WHERE OrderID = ? ;";
+              if($stmt = $this->_database->prepare($sql)){
+                $stmt->bind_param("ss", $_POST['Status'], $_POST['OID']);
+                $stmt->execute();
+              }else{
+                echo "something broke.:/<br>";
+              }
+              $stmt->close();
+              header('Location: Fahrer.php');
+          } catch (\Exception $e) {
+            throw $e;
+          }
+        }
+
     }
 
     /**
