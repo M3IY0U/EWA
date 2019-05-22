@@ -126,6 +126,7 @@ header;
 echo <<<item
                         <div class="item">
                           <div class="text">$oname</div>
+                          <img src="$opath" alt="$oname">
                           <div class="thumb"></div>
                           <div class="price">$oprice €</div>
                         </div>
