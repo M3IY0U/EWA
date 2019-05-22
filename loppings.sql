@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2019 at 08:35 PM
+-- Generation Time: May 22, 2019 at 11:40 PM
 -- Server version: 10.1.38-MariaDB
--- PHP Version: 7.1.27
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,10 +40,12 @@ CREATE TABLE `offer` (
 --
 
 INSERT INTO `offer` (`OfferID`, `OfferName`, `OfferImgPath`, `OfferPrice`) VALUES
-(6, 'Großer Döner', '/yeet/', 4123.3),
-(7, 'Vegetarischer Döner', '/yoot/', 333.33),
-(8, 'Döner Pizza', '/yuut/', 1.2),
-(9, 'Kleiner Döner', '/yaat/', 66.6);
+(6, 'Großer Döner', '/res/doener.png', 4.5),
+(7, 'Vegetarischer Döner', '/res/doenerveg.png', 3.5),
+(8, 'Döner Pizza', '/res/doenerpiz.png', 5.5),
+(9, 'Kleiner Döner', '/res/doenersmall.png', 3.5),
+(10, 'Lamacun', '/res/lahmacun.png', 4.5),
+(11, 'Borgar', '/res/burger.png', 4);
 
 -- --------------------------------------------------------
 
@@ -54,7 +56,8 @@ INSERT INTO `offer` (`OfferID`, `OfferName`, `OfferImgPath`, `OfferPrice`) VALUE
 CREATE TABLE `order` (
   `OrderID` int(11) NOT NULL,
   `Adress` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `OrderTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `OrderTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Status` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Bestellt'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -66,8 +69,7 @@ CREATE TABLE `order` (
 CREATE TABLE `orderitem` (
   `fOrderID` int(11) NOT NULL,
   `fOfferID` int(11) NOT NULL,
-  `ItemID` int(11) NOT NULL,
-  `Status` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `ItemID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -101,13 +103,13 @@ ALTER TABLE `orderitem`
 -- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `OfferID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `OfferID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
