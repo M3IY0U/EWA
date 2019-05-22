@@ -64,3 +64,15 @@ function isValidForm(){
     }
     return true;
 }
+
+document.addEventListener('keyup', function (e) {
+    'use strict';
+    var addressField, submitButton;
+    addressField = document.getElementById('adr');
+    submitButton = document.getElementById('send');
+    if (addressField.value.length <= 0 ) {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
+    }
+  });

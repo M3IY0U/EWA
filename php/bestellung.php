@@ -142,7 +142,7 @@ echo <<<form
           Ihr Warenkorb
           <form action="Bestellung.php" method="post" onsubmit="return isValidForm()">
               <label>
-                <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple>
+                <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple="multiple">
                 <!--  <option value="Großer Döner">Großer Döner</option>
                   <option value="Borgar">Borgar</option>
                   <option value="Lamacun" selected>Lamacun</option> -->
@@ -154,7 +154,7 @@ echo <<<form
                 <input type="text" name="Name" value="" placeholder="Name" tabindex="4">
                 <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr"tabindex="5">
                 <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b" tabindex="6">
-                <input type="submit" value="Bestellen" onclick="submitOrder()" tabindex="7">
+                <input type="submit" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
           </form>
         </div>
       </div>
