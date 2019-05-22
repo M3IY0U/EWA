@@ -106,7 +106,7 @@ class Baecker extends Page
         $items = $this->getViewData();
         $this->generatePageHeader('Baecker');
         // to do: call generateView() for all members
-echo <<<
+echo <<< header
 
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo">
@@ -122,7 +122,7 @@ echo <<<
       <div id="main">
         <div class="content">
 
-;
+header;
 $i = 0;
 foreach ($items as $item){
     $i++;
@@ -150,21 +150,20 @@ foreach ($items as $item){
 
     echo <<<form
     <div class="todo">
-      <form action="./Baecker.php" method="post">
+      <form action="./Baecker.php" method="post" id = "formid$i">
                   <div class="items">$oitems</div>
                   <div class="ordernum">Order# : $oid</div>
                   <div class="radio">
                     <fieldset>
-                      <input $checked1 type="radio" id="b$i" name="Status" value="Bestellt">
+                      <input $checked1 type="radio" id="b$i" name="Status" value="Bestellt" onclick="document.forms['formid$i'].submit();">
                       <label for="b$i"> Bestellt</label>
-                      <input $checked2 type="radio" id="io$i" name="Status" value="Im Ofen">
+                      <input $checked2 type="radio" id="io$i" name="Status" value="Im Ofen" onclick="document.forms['formid$i'].submit();">
                       <label for="io$i"> Im Ofen</label>
-                      <input type="radio" name="Status" id="f$i" value="Fertig">
+                      <input type="radio" name="Status" id="f$i" value="Fertig" onclick="document.forms['formid$i'].submit();">
                       <label for="f$i"> Fertig</label>
                       <input type="hidden" name="OID" value="$oid" />
                     </fieldset>
                   </div>
-                <input class="submit" type="submit" value="Bestellen" tabindex="7">
               </form>
             </div>
 form;

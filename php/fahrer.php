@@ -147,21 +147,20 @@ foreach ($items as $item){
 
 echo <<<menu
     <div class="todo">
-      <form action="Fahrer.php" method="post">
+      <form action="Fahrer.php" method="post" id = "formid$i">
         <div class="adress">$oadress</div>
         <div class="contents">$oitems</div>
         <div class="price">$ototal €</div>
         <div class="radio">
           <fieldset>
-            <input $checked1 type="radio" id="f$i" name="Status" value="Fertig">
+            <input $checked1 type="radio" id="f$i" name="Status" value="Fertig" onclick="document.forms['formid$i'].submit();">
             <label for="f$i"> Fertig</label>
-            <input $checked2 type="radio" id="u$i" name="Status" value="Unterwegs">
+            <input $checked2 type="radio" id="u$i" name="Status" value="Unterwegs" onclick="document.forms['formid$i'].submit();">
             <label for="u$i"> Unterwegs</label>
-            <input type="radio" id="g$i" name="Status" value="Geliefert">
+            <input type="radio" id="g$i" name="Status" value="Geliefert" onclick="document.forms['formid$i'].submit();">
             <label for="g$i">Geliefert</label>
           </fieldset>
           <input type="hidden" name="OID" value="$oid" />
-          <input class="submit" type="submit" value="Bestellen" tabindex="7">
         </div>
       </form>
     </div>

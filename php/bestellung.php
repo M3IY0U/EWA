@@ -203,6 +203,7 @@ form;
 
               $stmt->close();
               $sql = "";
+
               foreach (($_POST['Bestellung']) as $item){
                 $item = $this->_database->real_escape_string($item);
                 $sql .= htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID) SELECT $oid, OfferID FROM `offer` WHERE offer.OfferName = '$item'; ");
