@@ -123,10 +123,11 @@ header;
             $oname = htmlspecialchars($item->name);
             $opath = htmlspecialchars($item->path);
             $oprice = htmlspecialchars($item->price);
+            $toPass = htmlspecialchars(json_encode($item));
 echo <<<item
                         <div class="item">
                           <div class="text">$oname</div>
-                          <img src="$opath" alt="$oname">
+                          <img src="$opath" height="50" width="50" alt="$oname" onclick="addToBasket('$toPass')">
                           <div class="thumb"></div>
                           <div class="price">$oprice €</div>
                         </div>
@@ -139,21 +140,21 @@ echo <<<form
       <div id="right">
         <div class="warenkorb">
           Ihr Warenkorb
-          <form action="Bestellung.php" method="post">
+          <form action="Bestellung.php" method="post" onsubmit="return isValidForm()">
               <label>
-                <select name="Bestellung[]" size="6" tabindex="1" multiple>
-                  <option value="Großer Döner">Großer Döner</option>
+                <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple>
+                <!--  <option value="Großer Döner">Großer Döner</option>
                   <option value="Borgar">Borgar</option>
-                  <option value="Lamacun" selected>Lamacun</option>
+                  <option value="Lamacun" selected>Lamacun</option> -->
                 </select>
               </label>
-              <div class="total">14,30€</div>
-                <input type="submit" value="Auswahl Löschen" tabindex="2">
-                <input type="submit" value="Alle Löschen" tabindex="3">
+              <div class="total" id="sumField">Total: 0€</div>
+                <input type="button" value="Auswahl Löschen" onclick="removeFromBasket()" tabindex="2">
+                <input type="button" value="Alle Löschen" onclick="emptyBasket()" tabindex="3">
                 <input type="text" name="Name" value="" placeholder="Name" tabindex="4">
-                <input type="text" name="Adresse" value="" placeholder="Adresse" tabindex="5">
+                <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr"tabindex="5">
                 <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b" tabindex="6">
-                <input type="submit" value="Bestellen" tabindex="7">
+                <input type="submit" value="Bestellen" onclick="submitOrder()" tabindex="7">
           </form>
         </div>
       </div>
