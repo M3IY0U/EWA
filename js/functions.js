@@ -50,7 +50,7 @@ function updateSum() {
     });
 
     let sumField = document.getElementById("sumField");
-    sumField.innerText = "Total: " + sum + "€";
+    sumField.innerText = "Total: " + sum.toFixed(2) + "€";
 }
 
 function isValidForm(){
@@ -67,10 +67,13 @@ function isValidForm(){
 
 document.addEventListener('keyup', function (e) {
     'use strict';
-    var addressField, submitButton;
-    addressField = document.getElementById('adr');
-    submitButton = document.getElementById('send');
-    if (addressField.value.length <= 0 ) {
+    var adr = document.getElementById('adr');
+    var plz = document.getElementById('plz');
+    var name = document.getElementById('name');
+    var submitButton = document.getElementById('send');
+    let select = document.getElementById("wk");
+
+    if (adr.value.length <= 0 | plz.value.length <= 0 || name.value.length <= 0 || select.options.length <= 0) {
       submitButton.disabled = true;
     } else {
       submitButton.disabled = false;

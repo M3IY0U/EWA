@@ -151,9 +151,9 @@ echo <<<form
               <div class="total" id="sumField">Total: 0€</div>
                 <input type="button" value="Auswahl Löschen" onclick="removeFromBasket()" tabindex="2">
                 <input type="button" value="Alle Löschen" onclick="emptyBasket()" tabindex="3">
-                <input type="text" name="Name" value="" placeholder="Name" tabindex="4">
+                <input type="text" name="Name" value="" placeholder="Name" id="name" tabindex="4">
                 <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr"tabindex="5">
-                <input type="text" name="PLZ" value="" placeholder="PLZ" pattern="\b\d{5}\b" tabindex="6">
+                <input type="text" name="PLZ" value="" placeholder="PLZ" id="plz"pattern="\b\d{5}\b" tabindex="6">
                 <input type="submit" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
           </form>
         </div>
@@ -206,9 +206,11 @@ form;
 
               foreach (($_POST['Bestellung']) as $item){
                 $item = $this->_database->real_escape_string($item);
-                $sql .= htmlspecialchars("INSERT INTO `orderitem` (fOrderID, fOfferID) SELECT $oid, OfferID FROM `offer` WHERE offer.OfferName = '$item'; ");
+                $sql = "INSERT INTO `orderitem` (fOrderID, fOfferID) SELECT $oid, OfferID FROM `offer` WHERE offer.OfferName = '$item'; ";
+                $this->_database->query($sql);
+                //echo ($sql . "\n");
               }
-              $this->_database->multi_query($sql);
+
 
               header('Location: Bestellung.php');
           } catch (\Exception $e) {

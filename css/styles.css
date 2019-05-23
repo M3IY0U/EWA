@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(36, 36, 36);
+    background-color: ivory;
     margin: 0;
 }
 
@@ -9,7 +9,7 @@ body {
 }
 
 .header {
-    background-color: rgb(53, 53, 53);
+    background-color: white;
     overflow: hidden;
     padding: 20px 10px;
 }
