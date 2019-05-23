@@ -154,7 +154,7 @@ echo <<<form
                 <input type="text" name="Name" value="" placeholder="Name" id="name" tabindex="4">
                 <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr"tabindex="5">
                 <input type="text" name="PLZ" value="" placeholder="PLZ" id="plz"pattern="\b\d{5}\b" tabindex="6">
-                <input type="submit" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
+                <input type="submit" disabled="true" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
           </form>
         </div>
       </div>

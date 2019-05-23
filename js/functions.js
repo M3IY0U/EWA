@@ -28,6 +28,7 @@ function emptyBasket() {
   sum = 0.0;
   basket = [];
   updateSum();
+  updateSubmitButton();
 }
 
 function removeFromBasket() {
@@ -40,6 +41,7 @@ function removeFromBasket() {
     }
   }
   updateSum();
+  updateSubmitButton();
 }
 
 function updateSum() {
@@ -65,23 +67,38 @@ function isValidForm() {
   return true;
 }
 
-document.addEventListener("keyup", function(e) {
-  "use strict";
-  var adr = document.getElementById("adr");
-  var plz = document.getElementById("plz");
-  var name = document.getElementById("name");
-  var submitButton = document.getElementById("send");
-  let select = document.getElementById("wk");
+document.addEventListener("click", function() {
+    "use strict";
+    updateSubmitButton();
+});
 
-  if (
-    (adr.value.length <= 0) | (plz.value.length <= 0) ||
-    name.value.length <= 0 ||
-    select.options.length <= 0
-  ) {
-    submitButton.disabled = true;
-  } else {
-    submitButton.disabled = false;
-  }
+function updateSubmitButton(){
+    var options = document.getElementById("wk");
+    var submitButton = document.getElementById("send");
+    if(options.length <= 0)
+    {
+        submitButton.disabled = true;
+        return;
+    }
+    else{
+        submitButton.disabled = false;
+    }
+    var adr = document.getElementById("adr");
+    var plz = document.getElementById("plz");
+    var name = document.getElementById("name");
+    var submitButton = document.getElementById("send");
+    if (
+      (adr.value.length <= 0) || (plz.value.length <= 0) ||
+      name.value.length <= 0) {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
+    }
+}
+
+document.addEventListener("keyup", function() {
+  "use strict";
+  updateSubmitButton();
 });
 
 function toggleMode() {
@@ -92,12 +109,4 @@ function toggleMode() {
     document.body.style.backgroundColor = "#121212";
     document.body.style.color = "white";
   }
-}
-
-function textNodesUnder(el) {
-  var n,
-    a = [],
-    walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-  while ((n = walk.nextNode())) a.push(n);
-  return a;
 }
