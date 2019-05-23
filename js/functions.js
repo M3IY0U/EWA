@@ -78,4 +78,10 @@ document.addEventListener('keyup', function (e) {
     } else {
       submitButton.disabled = false;
     }
-  });
+  }
+
+function process(status){
+
+  let items = JSON.parse(status);
+
+});
