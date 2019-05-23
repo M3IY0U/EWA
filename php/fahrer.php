@@ -110,7 +110,7 @@ class Fahrer extends Page
 echo <<<header
 
 <div class="header">
-  <img src="../res/banner.svg" alt="banner" id="logo">
+  <img src="../res/banner.svg" alt="banner" id="logo" onclick="toggleMode()">
   <div class="header-right">
       <a href="bestellung.php">Bestellung</a>
       <a href="kunde.php">Kunde</a>
