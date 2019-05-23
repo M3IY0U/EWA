@@ -140,7 +140,7 @@ echo <<<form
       <div id="right">
         <div class="warenkorb">
           Ihr Warenkorb
-          <form action="Bestellung.php" method="post" onsubmit="return isValidForm()">
+          <form action="bestellung.php" method="post" onsubmit="return isValidForm()">
               <label>
                 <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple="multiple">
                 <!--  <option value="Großer Döner">Großer Döner</option>
@@ -211,8 +211,7 @@ form;
                 //echo ($sql . "\n");
               }
 
-
-              header('Location: Bestellung.php');
+              header('Location: bestellung.php');
           } catch (\Exception $e) {
             throw $e;
           }
