@@ -1,6 +1,7 @@
 body {
-    background-color: ivory;
+    background-color: #121212;
     margin: 0;
+    color: white;
 }
 
 #logo {
@@ -63,4 +64,10 @@ body {
     #logo{
         height: 3rem;
     }
+}
+
+.responsiveWrapper {
+    width: 100%;
+    position: relative;
+    display: block;
 }

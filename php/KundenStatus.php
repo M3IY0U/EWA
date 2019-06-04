@@ -129,7 +129,7 @@ class PageTemplate extends Page
      * the output of the HTML-file.
      * The name "main" is no keyword for php. It is just used to
      * indicate that function as the central starting point.
-     * To make it simpler this is a static function. That is you can simply
+     * To make it simpler this is a static function. That is you can simply/
      * call it without first creating an instance of the class.
      *
      * @return none
@@ -137,7 +137,7 @@ class PageTemplate extends Page
     public static function main()
     {
         try {
-            session_start();
+            // session_start();
             $page = new PageTemplate();
             $page->processReceivedData();
             $page->generateView();

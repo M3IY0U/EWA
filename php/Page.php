@@ -86,6 +86,10 @@ echo <<<code
     <meta charset="utf-8">
     <title>$headline</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/right.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <script src="/js/functions.js"></script>
     <link rel="shortcut icon" href="../res/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">

@@ -16,7 +16,6 @@
  * @link     http://www.fbi.h-da.de
  */
 
-// to do: change name 'Bestellung' throughout this file
 require_once './Page.php';
 require_once './Offer.php';
 
@@ -127,7 +126,7 @@ header;
 echo <<<item
                         <div class="item">
                           <div class="text">$oname</div>
-                          <img src="$opath" height="50" width="50" alt="$oname" onclick="addToBasket('$toPass')">
+                          <img src="$opath" alt="$oname" onclick="addToBasket('$toPass')">
                           <div class="thumb"></div>
                           <div class="price">$oprice €</div>
                         </div>
@@ -159,14 +158,7 @@ echo <<<form
         </div>
       </div>
 
-      <div id="footer">
-          <ul>
-              <li><a href="bestellung.php">Bestellung</a></li>
-              <li><a href="kunde.php">Kunde</a></li>
-              <li><a href="baecker.php">Bäcker</a></li>
-              <li><a href="fahrer.php">Fahrer</a></li>
-            </ul>
-      </div>
+
 
 form;
         $this->generatePageFooter();
@@ -211,7 +203,7 @@ form;
                 //echo ($sql . "\n");
               }
 
-              header('Location: bestellung.php');
+              header('Location: kunde.php');
           } catch (\Exception $e) {
             throw $e;
           }

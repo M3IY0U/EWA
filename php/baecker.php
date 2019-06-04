@@ -175,15 +175,6 @@ echo<<< form
         </div>
       </div>
 
-      <div id="footer">
-          <ul>
-              <li><a href="bestellung.php">Bestellung</a></li>
-              <li><a href="kunde.php">Kunde</a></li>
-              <li><a href="baecker.php">Bäcker</a></li>
-              <li><a href="fahrer.php">Fahrer</a></li>
-            </ul>
-      </div>
-
 form;
         $this->generatePageFooter();
     }

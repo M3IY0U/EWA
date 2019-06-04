@@ -1,0 +1,14 @@
+#right {
+    max-width: 320px;
+    margin: 0 auto;
+    float: left;
+    position: relative;
+}
+
+#right .warenkorb {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 1000px;
+    background: rgba(0,0,0, .3);
+}

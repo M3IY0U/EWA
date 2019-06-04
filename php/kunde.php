@@ -91,7 +91,6 @@ class Kunde extends Page
      */
     protected function generateView()
     {
-
         $this->generatePageHeader('Kunde');
         if(isset($_SESSION['oid'])){
             $items = $this->getViewData($_SESSION['oid']);
@@ -108,7 +107,7 @@ class Kunde extends Page
                 </div>
 
 
-                <div id="main">
+                <div id="main" id="text">
                   <div class="content">
                     <div class="error">
                       <div class="img"><img src="../res/top10traurig.png" alt=":("></div>
@@ -133,6 +132,7 @@ header_no_order;
 
 echo <<<header
 
+      <script src="/js/StatusUpdate.js"></script>
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo" onclick="toggleMode()">
         <div class="header-right">
@@ -143,7 +143,7 @@ echo <<<header
         </div>
       </div>
 
-      <div id="main">
+      <div id="main" id="text">
         <div class="content">
 header;
 
@@ -164,14 +164,7 @@ echo <<<footer
         </div>
       </div>
 
-      <div id="footer">
-          <ul>
-              <li><a href="bestellung.php">Bestellung</a></li>
-              <li><a href="#kunde">Kunde</a></li>
-              <li><a href="baecker.php">Bäcker</a></li>
-              <li><a href="fahrer.php">Fahrer</a></li>
-            </ul>
-      </div>
+
 
 footer;
         $this->generatePageFooter();
@@ -211,6 +204,10 @@ footer;
             $page = new Kunde();
             $page->processReceivedData();
             $page->generateView();
+            // ob_start();
+            // include 'KundenStatus.php';
+            // $lol = ob_get_clean();
+            // echo($lol);
         }
         catch (Exception $e) {
             header("Content-type: text/plain; charset=UTF-8");
