@@ -1,14 +1,24 @@
 #right {
     max-width: 320px;
     margin: 0 auto;
-    float: left;
+    float: right;
     position: relative;
 }
 
 #right .warenkorb {
     position: absolute;
-    right: 10px;
-    top: 10px;
-    height: 1000px;
-    background: rgba(0,0,0, .3);
+    right: 0%;
+    top: 0%;
+    height: 100vh;
+    width: 20rem;
+    background: rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+
+@media only screen and (max-width: 960px) {
+    #right .warenkorb {
+        float: none;
+        height: 10rem;
+    }
 }

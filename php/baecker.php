@@ -108,6 +108,8 @@ class Baecker extends Page
         // to do: call generateView() for all members
 echo <<< header
 
+      
+      
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo" onclick="toggleMode()">
         <div class="header-right">

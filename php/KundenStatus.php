@@ -1,4 +1,4 @@
-<?php	// UTF-8 marker äöüÄÖÜß€
+<?php    // UTF-8 marker äöüÄÖÜß€
 /**
  * Class PageTemplate for the exercises of the EWA lecture
  * Demonstrates use of PHP including class and OO.
@@ -73,12 +73,12 @@ class PageTemplate extends Page
         $oid = $this->_database->real_escape_string($oid);
         $offeritems = $this->_database->query("SELECT Status, OfferName FROM `offer` o,`orderitem` i, `order` od WHERE i.fOfferID=o.OfferID AND i.fOrderID=od.OrderID AND od.OrderID = $oid; ");
         if (!$offeritems)
-            throw new Exception("Query failed:" .$_database->error());
-        $result=[];
-         while($item = $offeritems->fetch_assoc()){
-          array_push($result,new Order($item['Status'],$item['OfferName']));
+            throw new Exception("Query failed:" . $_database->error());
+        $result = [];
+        while ($item = $offeritems->fetch_assoc()) {
+            array_push($result, new Order($item['Status'], $item['OfferName']));
         }
-        return $result;// to do: fetch data for this view from the database
+        return $result; // to do: fetch data for this view from the database
     }
 
     /**
@@ -98,12 +98,12 @@ class PageTemplate extends Page
         // // to do: output view of this page
         // $this->generatePageFooter();
 
-        if(isset($_SESSION['oid'])){
+        if (isset($_SESSION['oid'])) {
             $items = $this->getViewData($_SESSION['oid']);
             $serializedData = json_encode($items);
             echo $serializedData;
-        }else{
-          echo("oof");
+        } else {
+            echo ("oof");
         }
     }
 
@@ -112,7 +112,7 @@ class PageTemplate extends Page
      * If this page is supposed to do something with submitted
      * data do it here.
      * If the page contains blocks, delegate processing of the
-	 * respective subsets of data to them.
+     * respective subsets of data to them.
      *
      * @return none
      */
@@ -137,12 +137,11 @@ class PageTemplate extends Page
     public static function main()
     {
         try {
-            // session_start();
+            session_start();
             $page = new PageTemplate();
             $page->processReceivedData();
             $page->generateView();
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             header("Content-type: application/json; charset=UTF-8");
             echo $e->getMessage();
         }

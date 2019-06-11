@@ -154,7 +154,7 @@ header;
 echo <<<order
           <div class="order">
               <div class="Item">$oname</div>
-              <div class="Status">$ostatus</div>
+              <div class="Status" id="status">$ostatus</div>
           </div>
 
 order;

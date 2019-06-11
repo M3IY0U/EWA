@@ -76,7 +76,11 @@ abstract class Page
     protected function generatePageHeader($headline = "")
     {
         $headline = htmlspecialchars($headline);
+        $script = "";
         header("Content-type: text/html; charset=UTF-8");
+        if($headline == "Bestellung"){
+          $script = '<script src="/js/functions.js"></script>';
+        }
 
 echo <<<code
 
@@ -90,9 +94,9 @@ echo <<<code
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/right.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <script src="/js/functions.js"></script>
     <link rel="shortcut icon" href="../res/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    $script
     <!-- (unessescary) stuff
       <base href="https://www.example.de/">
       <meta name="robots" content="index,follow">

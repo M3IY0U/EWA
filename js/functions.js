@@ -1,6 +1,6 @@
 let basket = new Array();
 let sum = 0.0;
-function addToBasket(arg) {
+function addToBasket(elem, arg) {
   "use strict";
   let pItem = JSON.parse(arg);
   basket.push(pItem);
@@ -10,6 +10,7 @@ function addToBasket(arg) {
   opt.value = pItem["name"];
   opt.innerText = pItem["name"];
   warenkorb.appendChild(opt);
+  wiggleItem(elem);
   updateSum();
 }
 
@@ -109,4 +110,47 @@ function toggleMode() {
     document.body.style.backgroundColor = "#121212";
     document.body.style.color = "white";
   }
+}
+
+async function wiggleItem(arg){
+  //arg.style.width = "18rem";
+  arg.style.transform = "translate (1px,1px)";
+  arg.style.transform = "rotate(0deg)";
+  await sleep(50);
+  arg.style.transform = "translate(-1px, -2px)";
+  arg.style.transform = "rotate(-2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(-3px, 0px)";
+  arg.style.transform = "rotate(2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(3px, 2px)";
+  arg.style.transform = "rotate(0deg)";
+  await sleep(50);
+  arg.style.transform = "translate(1px, -1px)";
+  arg.style.transform = "rotate(2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(-1px, 2px)";
+  arg.style.transform = "rotate(-2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(-3px, 1px)";
+  arg.style.transform = "rotate(0deg)";
+  await sleep(50);
+  arg.style.transform = "translate(3px, 1px)";
+  arg.style.transform = "rotate(-2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(-1px, -1px)";
+  arg.style.transform = "rotate(2deg)";
+  await sleep(50);
+  arg.style.transform = "translate(1px, 2px)";
+  arg.style.transform = "rotate(0deg)";
+  await sleep(50);
+  arg.style.transform = "translate(1px, -2px)";
+  arg.style.transform = "rotate(-2deg)";
+  
+  arg.style.transform = "rotate(0deg)";
+  
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

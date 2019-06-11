@@ -50,6 +50,43 @@ body {
     padding-top: 1.5rem;
 }
 
+.item {
+    display: inline-block;
+    margin: 2rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 1rem;
+    font-size: 2rem;
+    line-height: 2rem;
+    border-radius: 1rem;
+    width: 20rem;
+}
+
+.item:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.text{
+    font-family: 'Ubuntu', sans-serif;
+}
+.price{
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+.thumb img {
+    width: 15rem;
+    height: auto;
+}
+.warenkorb {
+    display: inline-block;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+.total {
+    
+}
+
 @media only screen and (max-width: 960px) {
     .header a {
       float: none;
@@ -63,6 +100,13 @@ body {
     }
     #logo{
         height: 3rem;
+    }
+    .thumb img{
+        width: 5rem;
+        height: auto
+    }
+    .item{
+        width: 10rem;
     }
 }
 
