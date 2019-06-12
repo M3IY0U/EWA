@@ -108,6 +108,25 @@ class Bestellung extends Page
 
 
       <div id="main">
+        <div class="warenkorb">
+        Ihr Warenkorb
+        <form action="bestellung.php" method="post" onsubmit="return isValidForm()">
+            <label>
+              <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple="multiple">
+              <option value=”” disabled selected>----------------</option>
+              </select>
+            </label>
+
+          <div class="total" id="sumField">Total: 0€</div>
+          <input type="button" value="Auswahl Löschen" onclick="removeFromBasket()" tabindex="2">
+          <input type="button" value="Alle Löschen" onclick="emptyBasket()" tabindex="3">
+          <input type="text" name="Name" value="" placeholder="Name" id="name" tabindex="4">
+          <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr" tabindex="5">
+          <input type="text" name="PLZ" value="" placeholder="PLZ" id="plz" pattern="\b\d{5}\b" tabindex="6">
+          <input type="submit" disabled="disabled" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
+
+      </form>
+    </div>
         <div class="content">
           <div class="headerimage">
           </div>
@@ -131,27 +150,7 @@ item;
     echo <<<form
         </div>
       
-      <div id="right">
-        <div class="warenkorb">
-          Ihr Warenkorb
-          <form action="bestellung.php" method="post" onsubmit="return isValidForm()">
-              <label>
-                <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple="multiple">
-                <!--  <option value="Großer Döner">Großer Döner</option>
-                  <option value="Borgar">Borgar</option>
-                  <option value="Lamacun" selected>Lamacun</option> -->
-                </select>
-              </label>
-              <div class="total" id="sumField">Total: 0€</div>
-                <input type="button" value="Auswahl Löschen" onclick="removeFromBasket()" tabindex="2">
-                <input type="button" value="Alle Löschen" onclick="emptyBasket()" tabindex="3">
-                <input type="text" name="Name" value="" placeholder="Name" id="name" tabindex="4">
-                <input type="text" name="Adresse" value="" placeholder="Adresse" id="adr"tabindex="5">
-                <input type="text" name="PLZ" value="" placeholder="PLZ" id="plz"pattern="\b\d{5}\b" tabindex="6">
-                <input type="submit" disabled="true" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
-          </form>
-        </div>
-      </div>
+        
       </div>
 
 

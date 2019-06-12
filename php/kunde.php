@@ -143,7 +143,7 @@ echo <<<header
         </div>
       </div>
 
-      <div id="main" id="text">
+      <div id="text">
         <div class="content">
 header;
 
@@ -154,13 +154,14 @@ header;
 echo <<<order
           <div class="order">
               <div class="Item">$oname</div>
-              <div class="Status" id="status">$ostatus</div>
           </div>
 
 order;
       }
+      
 
 echo <<<footer
+          <div class="Status" id="status">$ostatus</div>
         </div>
       </div>
 

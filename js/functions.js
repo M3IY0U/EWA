@@ -89,7 +89,7 @@ function updateSubmitButton(){
     var name = document.getElementById("name");
     var submitButton = document.getElementById("send");
     if (
-      (adr.value.length <= 0) || (plz.value.length <= 0) ||
+      (adr.value.length <= 0) || (plz.value.length <= 4) ||
       name.value.length <= 0) {
       submitButton.disabled = true;
     } else {
@@ -113,7 +113,6 @@ function toggleMode() {
 }
 
 async function wiggleItem(arg){
-  //arg.style.width = "18rem";
   arg.style.transform = "translate (1px,1px)";
   arg.style.transform = "rotate(0deg)";
   await sleep(50);
@@ -148,7 +147,6 @@ async function wiggleItem(arg){
   arg.style.transform = "rotate(-2deg)";
   
   arg.style.transform = "rotate(0deg)";
-  
 }
 
 function sleep(ms) {

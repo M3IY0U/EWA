@@ -1,19 +1,20 @@
 body {
-    background-color: #121212;
+    background-color: ivory;
+    color: black;
     margin: 0;
-    color: white;
 }
-#main {
+h1{
+    margin-top: 0;
+}
+.main{
     display: flex;
-    justify-content: space-between;
-}
-.content{
-    width: 75%;
+    flex-flow: column;
 }
 
 #logo {
-    height: 5rem;
+
     padding: 1rem;
+    height: 3rem;
 }
 
 .header {
@@ -23,15 +24,19 @@ body {
 }
 
 .header a {
-    float: left;
+    
     color: black;
-    text-align: center;
+    
     text-decoration: none;
     padding: 1rem;
     font-size: 2rem;
     line-height: 2rem;
     border-radius: 1rem;
     font-family: 'Ubuntu', sans-serif;
+    float: none;
+    display: block;
+    text-align: left;
+
 }
 
 .header a.active {
@@ -52,21 +57,28 @@ body {
 }
 
 .header-right {
-    float: right;
+
     padding: 1rem;
     padding-top: 1.5rem;
+    float: none;
 }
 
-.item {
+.content {
+    font-family: 'Ubuntu', sans-serif;
+    width: 100%;
+}
+
+.item {   
     display: inline-block;
     margin: 0.5rem;
     text-align: center;
     text-decoration: none;
     padding: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 2rem;
     border-radius: 1rem;
-    width: 20rem;
+
+    width: 10rem;
 }
 
 .item:hover{
@@ -74,51 +86,118 @@ body {
     color: white;
 }
 
-.text{
-    font-family: 'Ubuntu', sans-serif;
-}
+
 .price{
-    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
 }
 .thumb img {
-    width: 15rem;
-    height: auto;
+
+    width: 5rem;
+    height: auto
+}
+.content{
+    order: 1;
 }
 .warenkorb {
+    order: 2;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
+    padding: 1rem;
+
+}
+.total {
+    font-weight: bold;
+    max-width: max-content;
+}
+
+.warenkorb select{
+    padding: 0.5rem;
+    width: 100%;
     display: inline-block;
+    max-width: auto;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    overflow-y: auto;
+}
+
+.warenkorb input[type="button"] {
+    background-color: rgb(161, 0, 0);
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.warenkorb input[type="button"]:hover{
+    animation: shadow-drop-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.warenkorb input[type="submit"]{
+    background-color: rgb(15, 73, 0);
+    color: white;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
 }
-.total {
-    
+
+.warenkorb input[type="submit"]:not([disabled]){
+    background-color: rgb(31, 153, 0);
+	        animation: rotate-hor-center 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
-@media only screen and (max-width: 960px) {
+.warenkorb input[type="submit"]:hover{
+    animation: shadow-drop-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.warenkorb input{
+    box-sizing: border-box;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    display: inline-block;
+    max-width: none;
+    width: 100%;
+    border-radius: 0.75rem;
+    border-style: none;
+}
+
+@media screen and (min-width: 1000px) {
     .header a {
-      float: none;
-      display: block;
-      text-align: left;
+        float: left;
+        text-align: center;
     }
     .header-right {
-      float: none;
-    }
-    body{
+        float: right;
     }
     #logo{
-        height: 3rem;
+        height: 5rem;
     }
     .thumb img{
-        width: 5rem;
-        height: auto
+        width: 13rem;
+        height: auto;
     }
     .item{
-        width: 10rem;
+        width: 20rem;
+        font-size: 2rem;
     }
+    .content{
+        width: 75%;
+        margin: 0;
+    }
+    .warenkorb{
+        float:right;
+        right: 0;
+        width: 25%;
+        position: sticky;
+        height: 99vh;
+        top: 0;
+        margin: 0;
+    }
+
 }
 
 .responsiveWrapper {
     width: 100%;
-    position: relative;
-    display: block;
+    position: sticky;
+
 }
+
+
