@@ -3,6 +3,13 @@ body {
     margin: 0;
     color: white;
 }
+#main {
+    display: flex;
+    justify-content: space-between;
+}
+.content{
+    width: 75%;
+}
 
 #logo {
     height: 5rem;
@@ -52,7 +59,7 @@ body {
 
 .item {
     display: inline-block;
-    margin: 2rem;
+    margin: 0.5rem;
     text-align: center;
     text-decoration: none;
     padding: 1rem;

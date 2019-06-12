@@ -2,15 +2,17 @@
     max-width: 320px;
     margin: 0 auto;
     float: right;
-    position: relative;
+    position: sticky;
+    width: 25%;
 }
 
 #right .warenkorb {
-    position: absolute;
+    position: sticky;
+    position: -webkit-sticky;
+    display: block;
     right: 0%;
     top: 0%;
     height: 100vh;
-    width: 20rem;
     background: rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }

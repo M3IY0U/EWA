@@ -130,7 +130,7 @@ item;
 
     echo <<<form
         </div>
-      </div>
+      
       <div id="right">
         <div class="warenkorb">
           Ihr Warenkorb
@@ -151,6 +151,7 @@ item;
                 <input type="submit" disabled="true" value="Bestellen" id="send" onclick="submitOrder()" tabindex="7">
           </form>
         </div>
+      </div>
       </div>
 
 
