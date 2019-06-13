@@ -20,7 +20,7 @@ h1{
 .header {
     background-color: rgb(114, 114, 114);
     overflow: hidden;
-    padding: 20px 10px;
+    padding: 2rem 1rem;
 }
 
 .header a {
@@ -50,7 +50,7 @@ h1{
 }
 
 .header a.logo {
-    font-size: 25px;
+    font-size: 2rem;
     font-weight: bold;
     width: 50%;
     height: auto;

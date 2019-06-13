@@ -113,7 +113,6 @@ class Bestellung extends Page
         <form action="bestellung.php" method="post" onsubmit="return isValidForm()">
             <label>
               <select name="Bestellung[]" id="wk" size="6" tabindex="1" multiple="multiple">
-              <option value=”” disabled selected>----------------</option>
               </select>
             </label>
 
