@@ -134,12 +134,16 @@ foreach ($items as $item){
     $oid = $item->id;
     $checked1 = "";
     $checked2 = "";
+    $checked3 = "";
     switch ($item->status) {
       case 'Bestellt':
         $checked1 = "checked";
         break;
       case 'Im Ofen':
         $checked2 = "checked";
+        break;
+      case 'Fertig':
+        $checked3 = "checked";
         break;
       default:
         continue 2;
@@ -161,7 +165,7 @@ foreach ($items as $item){
                       <label for="b$i"> Bestellt</label>
                       <input $checked2 type="radio" id="io$i" name="Status" value="Im Ofen" onclick="document.forms['formid$i'].submit();">
                       <label for="io$i"> Im Ofen</label>
-                      <input type="radio" name="Status" id="f$i" value="Fertig" onclick="document.forms['formid$i'].submit();">
+                      <input $checked3 type="radio" name="Status" id="f$i" value="Fertig" onclick="document.forms['formid$i'].submit();">
                       <label for="f$i"> Fertig</label>
                       <input type="hidden" name="OID" value="$oid" />
                     </fieldset>
