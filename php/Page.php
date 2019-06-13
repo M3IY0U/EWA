@@ -94,6 +94,7 @@ echo <<<code
     <link rel="shortcut icon" href="../res/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     $script
+    <script src="/js/general.js"></script>
     <!-- (unessescary) stuff
       <base href="https://www.example.de/">
       <meta name="robots" content="index,follow">

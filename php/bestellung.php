@@ -98,7 +98,7 @@ class Bestellung extends Page
 
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo" onclick="toggleMode()">
-        <div class="header-right">
+        <div class="header-right" id="headerright">
             <a class="active" href="bestellung.php">Bestellung</a>
             <a href="kunde.php">Kunde</a>
             <a href="baecker.php">Bäcker</a>

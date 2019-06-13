@@ -112,7 +112,7 @@ echo <<< header
       
       <div class="header">
         <img src="../res/banner.svg" alt="banner" id="logo" onclick="toggleMode()">
-        <div class="header-right">
+        <div class="header-right" id="headerright">
             <a href="bestellung.php">Bestellung</a>
             <a href="kunde.php">Kunde</a>
             <a class="active" href="baecker.php">Bäcker</a>
@@ -156,7 +156,7 @@ foreach ($items as $item){
 
     echo <<<form
     <div class="todo">
-      <form action="./Baecker.php" method="post" id = "formid$i">
+      <form action="./baecker.php" method="post" id = "formid$i">
                   <div class="items">$oitems</div>
                   <div class="ordernum">Order# : $oid</div>
                   <div class="radio">
@@ -220,7 +220,7 @@ form;
                 echo "something broke.:/<br>";
               }
               $stmt->close();
-              header('Location: Baecker.php');
+              header('Location: baecker.php');
           } catch (\Exception $e) {
             throw $e;
           }
